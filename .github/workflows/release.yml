@@ -31,3 +31,5 @@ jobs:
         run: echo "PYTHON_VERSION=$(docker run my-temp-python-image:latest python -V 2>&1 | grep -Po '(?<=Python )(.+)')" >> $GITHUB_ENV
       - name: Build the Docker image
         run: docker build . --tag django-test:${{env.PYTHON_VERSION}} --tag django-test:${{matrix.version}}
+      - name: List all images
+        run: docker image ls
