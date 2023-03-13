@@ -1,4 +1,4 @@
-FROM my-image-test:latest
+FROM my-temp-python-image:latest
 
 RUN apt -y update
 RUN apt -y install apt-utils
