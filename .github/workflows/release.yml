@@ -26,5 +26,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: false
-          context: "/3.7"
+          context: "{{defaultContext}}:3.7"
           tags: test:latest
