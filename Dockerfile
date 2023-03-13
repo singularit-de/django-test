@@ -1,4 +1,4 @@
-FROM my-image:latest
+FROM my-image-test:latest
 
 RUN apt -y update
 RUN apt -y install apt-utils
