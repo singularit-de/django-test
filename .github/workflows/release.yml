@@ -22,7 +22,7 @@ jobs:
       - name: Build the Python Docker image
         run: docker build ./3.7 --tag my-temp-python-image:latest
       - name: Set actual python version
-        run: echo "VERSION=$(docker run my-temp-python-image:latest python --version)" >> $GITHUB_ENV
+        run: echo "VERSION=$(docker run my-temp-python-image:latest python -V 2>&1 | grep -Po '(?<=Python )(.+)')" >> $GITHUB_ENV
       - run: echo VERSION
       - run: echo $VERSION
       - name: Build the Docker image
