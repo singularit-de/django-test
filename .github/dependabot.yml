@@ -9,5 +9,4 @@ updates:
     directory: "/3.7"
     schedule:
       interval: "daily"
-      time: "14:05"
     target-branch: "django-test"
