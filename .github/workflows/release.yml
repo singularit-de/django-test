@@ -19,7 +19,7 @@ jobs:
         with:
           filters: |
             src:
-              - '${{env.PYTHON_VERSION}}/**'
+              - '${{matrix.version}}/**'
 #      - name: Login to private container registry for dependencies
 #        uses: docker/login-action@v1
 #        with:
