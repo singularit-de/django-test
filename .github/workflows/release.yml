@@ -22,7 +22,7 @@ jobs:
               - '${{env.PYTHON_VERSION}}/**'
       - name: Detected changes
         uses: andymckay/cancel-action@0.3
-        if: steps.changes.outputs.src == 'true'
+        if: steps.changes.outputs.src == 'false'
 #      - name: Login to private container registry for dependencies
 #        uses: docker/login-action@v1
 #        with:
