@@ -20,9 +20,10 @@ jobs:
           filters: |
             src:
               - '${{env.PYTHON_VERSION}}/**'
-      - name: Detected changes
-        uses: andymckay/cancel-action@0.3
+      - name: Changes Detected?
         if: steps.changes.outputs.src == 'false'
+        run: exit 1
+        continue-on-error: false
 #      - name: Login to private container registry for dependencies
 #        uses: docker/login-action@v1
 #        with:
