@@ -1,3 +1,7 @@
+LABEL org.opencontainers.image.source=https://github.com/singularit-de/django-test
+LABEL maintainer="singularIT GmbH <robin.kehl@singular-it.de>"
+LABEL org.opencontainers.image.documentation=https://github.com/singularit-de/django-test#readme
+
 FROM my-temp-python-image:latest
 
 RUN apt -y update
