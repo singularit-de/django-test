@@ -8,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      # Label used to access the service container
+      mysql:
+        # Docker Hub image
+        image: mysql
     strategy:
       fail-fast: false
       matrix:
