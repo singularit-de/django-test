@@ -3,7 +3,7 @@ name: release
 on:
   push:
     branches:
-      - 'main'
+      - 'tests/mysql-mariadb'
 
 jobs:
   build:
@@ -37,6 +37,8 @@ jobs:
       - name: Build the Docker image
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
         run: docker build . --tag orbisk/django-test:${{env.PYTHON_VERSION}} --tag orbisk/django-test:${{matrix.version}}
-      - name: Push Image
-        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
-        run: docker push -a orbisk/django-test
+      - name: Test MySQL
+        run: cd tests && docker run --rm -d --network host orbisk/django-test:${{env.PYTHON_VERSION}} python manage.py migrate app_mysql --database mysql
+#      - name: Push Image
+#        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
+#        run: docker push -a orbisk/django-test
