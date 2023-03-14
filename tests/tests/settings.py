@@ -92,8 +92,8 @@ DATABASES = {
         "HOST": env.str("MYSQL_HOST", "localhost"),
         "PORT": env.int("MYSQL_PORT", 3306),
         "NAME": env.str("MYSQL_NAME", "test_db"),
-        "USER": env.str("MYSQL_USER", "test"),
-        "PASSWORD": env.str("MYSQL_PASSWORD", None),
+        "USER": env.str("MYSQL_USER", "test_user"),
+        "PASSWORD": env.str("MYSQL_PASSWORD", "password"),
     },
     DB_MARIADB: {
         "ENGINE": "django.db.backends.mysql",
