@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         version: [ "3.7", "3.8", "3.9", "3.10", "3.11"]
     steps:
@@ -38,9 +39,7 @@ jobs:
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
         run: docker build . --tag orbisk/django-test:${{env.PYTHON_VERSION}} --tag orbisk/django-test:${{matrix.version}}
       - name: Test MySQL
-        run: echo "IMAGE_UUID=$(docker run --network host orbisk/django-test:${{env.PYTHON_VERSION}} python manage.py migrate app_mysql --database mysql)" >> $GITHUB_ENV
-      - name: logs
-        run: docker logs ${{env.IMAGE_UUID}}
+        run: cd tests && docker run -d --network host orbisk/django-test:${{env.PYTHON_VERSION}} python manage.py migrate app_mysql --database mysql)
 #      - name: Push Image
 #        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
 #        run: docker push -a orbisk/django-test
