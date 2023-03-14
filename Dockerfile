@@ -17,4 +17,4 @@ RUN apt -y install net-tools default-mysql-client default-libmysqlclient-dev
 #MariaDB
 RUN apt -y install libmariadbclient-dev libssl-dev
 
-echo "GRANT ALL on *.* to '${MYSQL_USER}';"| mysql -u "${MYSQL_ROOT_USERNAME}" --password="${MYSQL_ROOT_PASSWORD}" -h mysql
+RUN echo "GRANT ALL on *.* to '${MYSQL_USER}';"| mysql -u "${MYSQL_ROOT_USERNAME}" --password="${MYSQL_ROOT_PASSWORD}" -h mysql
