@@ -38,7 +38,7 @@ jobs:
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
         run: docker build . --tag orbisk/django-test:${{env.PYTHON_VERSION}} --tag orbisk/django-test:${{matrix.version}}
       - name: Test MySQL
-        run: cd tests && echo "IMAGE_UUID=$(docker run --rm -d --network host orbisk/django-test:${{env.PYTHON_VERSION}} python manage.py migrate app_mysql --database mysql)" >> $GITHUB_ENV
+        run: echo "IMAGE_UUID=$(docker run --rm -d --network host orbisk/django-test:${{env.PYTHON_VERSION}} (cd tests &&python manage.py migrate app_mysql --database mysql))" >> $GITHUB_ENV
       - name: logs
         run: docker logs ${{env.IMAGE_UUID}}
 #      - name: Push Image
