@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      MYSQL_HOST: 127.0.0.1
       MYSQL_DATABASE: test_db
       MYSQL_USER: test_user
       MYSQL_PASSWORD: password
@@ -22,7 +23,6 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: ${{env.MYSQL_ALLOW_EMPTY_PASSWORD}}
         ports:
           - 33061:3306
-        command: ["mysqld", "--default-authentication-plugin=mysql_native_password"]
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     strategy:
       fail-fast: false
@@ -55,7 +55,9 @@ jobs:
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
         run: docker build . --tag orbisk/django-test:${{env.PYTHON_VERSION}} --tag orbisk/django-test:${{matrix.version}}
       - name: Test MySQL
-        run: docker run --network host -v /"$(pwd)/tests":/app -w /app orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py migrate app_mysql --database=mysql"
+        run: |
+          mysql -h ${{env.MYSQL_HOST}} -u ${{env.MYSQL_ROOT_USERNAME}} ${{MYSQL_DATABASE}} -e "SELECT * FROM mytable"
+          docker run --network host -v /"$(pwd)/tests":/app -w /app orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py migrate app_mysql --database=mysql"
 #      - name: Push Image
 #        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
 #        run: docker push -a orbisk/django-test
