@@ -95,6 +95,7 @@ DATABASES = {
         "USER": env.str("MYSQL_USER", "test_user"),
         "PASSWORD": env.str("MYSQL_PASSWORD", "password"),
         "OPTIONS": {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'auth_plugin': 'mysql_native_password'
         },
     },
