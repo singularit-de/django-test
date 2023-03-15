@@ -12,7 +12,7 @@ RUN apt-get -y update
 RUN apt-get -y install apt-utils
 
 # MySQL
-RUN apt-get -y install net-tools default-mysql-client libmariadb-dev
+RUN apt-get -y install net-tools default-mysql-client libmysql-dev
 
 #MariaDB
 RUN apt-get -y install libmariadbclient-dev libssl-dev
