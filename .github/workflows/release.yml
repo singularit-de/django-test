@@ -18,14 +18,14 @@ jobs:
     services:
       # Label used to access the service container
       mysql:
-        image: mysql:latest
+        image: mysql:7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: ${{env.MYSQL_ALLOW_EMPTY_PASSWORD}}
           MYSQL_USER: ${{env.MYSQL_USER}}
           MYSQL_PASSWORD: ${{env.MYSQL_PASSWORD}}
         ports:
           - 33061:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 --entrypoint="mysqld --default-authentication-plugin=mysql_native_password"
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     strategy:
       fail-fast: false
       matrix:
