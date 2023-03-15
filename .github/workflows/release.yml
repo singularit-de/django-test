@@ -56,7 +56,6 @@ jobs:
         run: docker build . --tag orbisk/django-test:${{env.PYTHON_VERSION}} --tag orbisk/django-test:${{matrix.version}}
       - name: Test MySQL
         run: |
-          mysql -h ${{env.MYSQL_HOST}} -u ${{env.MYSQL_ROOT_USERNAME}} ${{env.MYSQL_DATABASE}} -e "SELECT * FROM mytable"
           docker run --network host -v /"$(pwd)/tests":/app -w /app orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py migrate app_mysql --database=mysql"
 #      - name: Push Image
 #        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
