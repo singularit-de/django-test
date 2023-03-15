@@ -54,6 +54,8 @@ jobs:
       - name: Build the Docker image
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
         run: docker build . --tag orbisk/django-test:${{env.PYTHON_VERSION}} --tag orbisk/django-test:${{matrix.version}}
+      - run: |
+          docker run --network host -v /"$(pwd)/tests":/app -w /app mysql:latest sh -c "mysqladmin ping --host=${{env.MYSQL_HOST}} --port=${{env.MYSQL_POST}}"
       - name: Test MySQL
         run: |
           docker run --network host -v /"$(pwd)/tests":/app -w /app orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py migrate app_mysql --database=mysql"
