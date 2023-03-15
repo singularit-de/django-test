@@ -52,9 +52,8 @@ jobs:
       - name: Build the Docker image
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
         run: docker build . --tag orbisk/django-test:${{env.PYTHON_VERSION}} --tag orbisk/django-test:${{matrix.version}}
-      - run: mysqladmin ping -h mysql
       - name: Test MySQL
-        run: docker run --network host -v /"$(pwd)/tests":/app orbisk/django-test:3.10 sh -c "cd app && pip install -r requirements.txt && python manage.py migrate app_mysql --database mysql"
+        run: docker run --network host -v /"$(pwd)/tests":/app -w /app mysql:latest sh -c "mysqladmin ping --host='localhost' --port=33306"
 #      - name: Push Image
 #        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
 #        run: docker push -a orbisk/django-test
