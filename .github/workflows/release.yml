@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      MYSQL_HOST: 127.0.0.1
+      MYSQL_HOST: "127.0.0.1"
       MYSQL_DATABASE: test_db
       MYSQL_USER: test_user
       MYSQL_PASSWORD: password
