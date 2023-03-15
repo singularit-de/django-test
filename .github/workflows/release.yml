@@ -18,7 +18,7 @@ jobs:
     services:
       # Label used to access the service container
       mysql:
-        image: mysql:7
+        image: mysql:5.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: ${{env.MYSQL_ALLOW_EMPTY_PASSWORD}}
           MYSQL_USER: ${{env.MYSQL_USER}}
