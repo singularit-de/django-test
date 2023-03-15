@@ -8,13 +8,13 @@ ENV MYSQL_USER test
 ENV MYSQL_ROOT_USERNAME root
 ENV MYSQL_HOST 127.0.0.1
 
-RUN apt -y update
-RUN apt -y install apt-utils
+RUN apt-get -y update
+RUN apt-get -y install apt-utils
 
 # MySQL
-RUN apt -y install net-tools default-mysql-client libmysqlclient-dev
+RUN apt-get -y install net-tools default-mysql-client libmariadb-dev
 
 #MariaDB
-RUN apt -y install libmariadbclient-dev libssl-dev
+RUN apt-get -y install libmariadbclient-dev libssl-dev
 
 CMD "$(if [ $MYSQL_ALLOW_EMPTY_PASSWORD = 'yes' ] ; then echo \"GRANT ALL on *.* to ${MYSQL_USER};\"| mysql -u ${MYSQL_ROOT_USERNAME} --password=\"\" -h ${MYSQL_HOST}  --port=${MYSQL_PORT} ; else echo \"GRANT ALL on *.* to ${MYSQL_USER};\"| mysql -u ${MYSQL_ROOT_USERNAME} --password=${MYSQL_ROOT_PASSWORD} -h ${MYSQL_HOST} --port=${MYSQL_PORT}; fi)"
