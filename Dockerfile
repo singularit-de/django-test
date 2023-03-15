@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.source=https://github.com/singularit-de/django-te
 LABEL maintainer="singularIT GmbH <robin.kehl@singular-it.de>"
 LABEL org.opencontainers.image.documentation=https://github.com/singularit-de/django-test#readme
 
-ENV MYSQL_USER test
+ENV MYSQL_USER test_user
 ENV MYSQL_ROOT_USERNAME root
 ENV MYSQL_HOST 127.0.0.1
 
