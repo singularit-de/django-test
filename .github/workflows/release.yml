@@ -12,13 +12,12 @@ jobs:
       MYSQL_DATABASE: test_db
       MYSQL_USER: test_user
       MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: rootpassword
     services:
       # Label used to access the service container
       mysql:
         image: mysql
         env:
-          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_ROOT_PASSWORD}}
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         ports:
           - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
