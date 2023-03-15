@@ -95,7 +95,7 @@ DATABASES = {
         "USER": env.str("MYSQL_USER", "test_user"),
         "PASSWORD": env.str("MYSQL_PASSWORD", "password"),
         "OPTIONS": {
-            'default-authentication-plugin': 'mysql_native_password',
+            'init_command': 'SET default-authentication-plugin=mysql_native_password',
         },
     },
     DB_MARIADB: {
