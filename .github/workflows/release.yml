@@ -15,6 +15,12 @@ jobs:
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_PORT: 33061
+      MARIADB_HOST: 127.0.0.1
+      MARIADB_DATABASE: test_db
+      MARIADB_USER: test_user
+      MARIADB_PASSWORD: password
+      MARIADB_ALLOW_EMPTY_PASSWORD: 'yes'
+      MARIADB_PORT: 33062
     services:
       # Label used to access the service container
       mysql:
@@ -23,9 +29,19 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: ${{env.MYSQL_ALLOW_EMPTY_PASSWORD}}
           MYSQL_USER: ${{env.MYSQL_USER}}
           MYSQL_PASSWORD: ${{env.MYSQL_PASSWORD}}
-          MYSQL_DATABASE: test_db
+          MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
         ports:
           - 33061:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      mariadb:
+        image: mariadb
+        env:
+          MARIADB_ALLOW_EMPTY_PASSWORD: ${{env.MARIADB_ALLOW_EMPTY_PASSWORD}}
+          MARIADB_USER: ${{env.MARIADB_USER}}
+          MARIADB_PASSWORD: ${{env.MARIADB_PASSWORD}}
+          MARIADB_DATABASE: ${{env.MARIADB_DATABASE}}
+        ports:
+          - 33062:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     strategy:
       fail-fast: false
