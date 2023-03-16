@@ -99,7 +99,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "HOST": env.str("MARIADB_HOST"),
         "PORT": env.int("MARIADB_PORT"),
-        "NAME": env.str("MARIADB_NAME"),
+        "NAME": env.str("MARIADB_DATABASE"),
         "USER": env.str("MARIADB_USER"),
         "PASSWORD": env.str("MARIADB_PASSWORD"),
     },
