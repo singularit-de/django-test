@@ -8,6 +8,9 @@ ENV MYSQL_USER test_user
 ENV MYSQL_ROOT_USERNAME root
 ENV MYSQL_HOST 127.0.0.1
 
+
+RUN apt-get update
+RUN apt-get install lsb-release -y
 RUN cd /tmp && curl -OL https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb && dpkg -i mysql-apt-config* && rm -f /tmp/*.deb
 RUN apt-get -y update
 RUN apt-get -y install apt-utils
