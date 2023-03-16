@@ -23,6 +23,6 @@ RUN apt-get -y update
 RUN apt-get -y install net-tools mysql-client default-libmysqlclient-dev
 
 #MariaDB
-RUN apt-get -y install libmariadbclient-dev libssl-dev
+RUN apt-get -y install libmariadb-dev libssl-dev
 
 CMD "$(if [ $MYSQL_ALLOW_EMPTY_PASSWORD = 'yes' ] ; then echo \"GRANT ALL on *.* to ${MYSQL_USER};\"| mysql -u ${MYSQL_ROOT_USERNAME} --password=\"\" -h ${MYSQL_HOST}  --port=${MYSQL_PORT} ; else echo \"GRANT ALL on *.* to ${MYSQL_USER};\"| mysql -u ${MYSQL_ROOT_USERNAME} --password=${MYSQL_ROOT_PASSWORD} -h ${MYSQL_HOST} --port=${MYSQL_PORT}; fi)"
