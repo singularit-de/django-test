@@ -18,7 +18,7 @@ jobs:
     services:
       # Label used to access the service container
       mysql:
-        image: mysql:5.7
+        image: mysql
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: ${{env.MYSQL_ALLOW_EMPTY_PASSWORD}}
           MYSQL_USER: ${{env.MYSQL_USER}}
@@ -57,9 +57,9 @@ jobs:
       - name: Build the Docker image
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
         run: docker build . --tag orbisk/django-test:${{env.PYTHON_VERSION}} --tag orbisk/django-test:${{matrix.version}}
-      - name: Test MySQL 8 migration
+      - name: Test Databases
         run: |
-          docker run --network host -v /"$(pwd)/tests":/app -w /app -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_DATABASE=$MYSQL_DATABASE -e MYSQL_USER=$MYSQL_USER -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_PASSWORD=$MYSQL_PASSWORD orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py migrate app_mysql --database=mysql"
+          docker run --network host -v /"$(pwd)/tests":/app -w /app -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_DATABASE=$MYSQL_DATABASE -e MYSQL_USER=$MYSQL_USER -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_PASSWORD=$MYSQL_PASSWORD orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py migrate app_mysql --database=mysql && python manage.py migrate app_mariadb --database=mariadb"
 #      - name: Push Image
 #        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true'
 #        run: docker push -a orbisk/django-test
