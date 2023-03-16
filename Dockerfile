@@ -4,11 +4,7 @@ LABEL org.opencontainers.image.source=https://github.com/singularit-de/django-te
 LABEL maintainer="singularIT GmbH <robin.kehl@singular-it.de>"
 LABEL org.opencontainers.image.documentation=https://github.com/singularit-de/django-test#readme
 
-ENV MYSQL_USER test_user
-ENV MYSQL_ROOT_USERNAME root
-ENV MYSQL_HOST 127.0.0.1
 ENV DEBIAN_FRONTEND noninteractive
-
 
 RUN apt-get update
 RUN apt-get install lsb-release -y
@@ -25,4 +21,4 @@ RUN apt-get -y install net-tools mysql-client default-libmysqlclient-dev
 #MariaDB
 RUN apt-get -y install libmariadb-dev libssl-dev
 
-CMD "$(if [ $MYSQL_ALLOW_EMPTY_PASSWORD = 'yes' ] ; then echo \"GRANT ALL on *.* to ${MYSQL_USER};\"| mysql -u ${MYSQL_ROOT_USERNAME} --password=\"\" -h ${MYSQL_HOST}  --port=${MYSQL_PORT} ; else echo \"GRANT ALL on *.* to ${MYSQL_USER};\"| mysql -u ${MYSQL_ROOT_USERNAME} --password=${MYSQL_ROOT_PASSWORD} -h ${MYSQL_HOST} --port=${MYSQL_PORT}; fi)"
+CMD "$(if [ ${MYSQL_ALLOW_EMPTY_PASSWORD} = 'yes' ] ; then echo \"GRANT ALL on *.* to ${MYSQL_USER:-test_user};\"| mysql -u ${MYSQL_ROOT_USERNAME:-root} --password=\"\" -h ${MYSQL_HOST:-mysql}  --port=${MYSQL_PORT} ; else echo \"GRANT ALL on *.* to ${MYSQL_USER:-test_user};\"| mysql -u ${MYSQL_ROOT_USERNAME:-root} --password=${MYSQL_ROOT_PASSWORD} -h ${MYSQL_HOST:-msql} --port=${MYSQL_PORT}; fi)"
