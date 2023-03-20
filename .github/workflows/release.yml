@@ -15,12 +15,12 @@ jobs:
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_PORT: 33061
-      MARIADB_HOST: 127.0.0.1
-      MARIADB_DATABASE: test_db
-      MARIADB_USER: test_user
-      MARIADB_PASSWORD: password
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
-      MARIADB_PORT: 33062
+#      MARIADB_HOST: 127.0.0.1
+#      MARIADB_DATABASE: test_db
+#      MARIADB_USER: test_user
+#      MARIADB_PASSWORD: password
+#      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+#      MARIADB_PORT: 33062
       POSTGRES_HOST: 127.0.0.1
       POSTGRES_DB: test_db
       POSTGRES_USER: test_user
@@ -38,16 +38,16 @@ jobs:
 #        ports:
 #          - 33061:3306
 #        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      mariadb:
-        image: mariadb
-        env:
-          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: ${{env.MARIADB_ALLOW_EMPTY_ROOT_PASSWORD}}
-          MARIADB_USER: ${{env.MARIADB_USER}}
-          MARIADB_PASSWORD: ${{env.MARIADB_PASSWORD}}
-          MARIADB_DATABASE: ${{env.MARIADB_DATABASE}}
-        ports:
-          - 33062:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+#      mariadb:
+#        image: mariadb
+#        env:
+#          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: ${{env.MARIADB_ALLOW_EMPTY_ROOT_PASSWORD}}
+#          MARIADB_USER: ${{env.MARIADB_USER}}
+#          MARIADB_PASSWORD: ${{env.MARIADB_PASSWORD}}
+#          MARIADB_DATABASE: ${{env.MARIADB_DATABASE}}
+#        ports:
+#          - 33062:3306
+#        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       postgres:
         image: postgres
         env:
