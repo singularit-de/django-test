@@ -103,6 +103,14 @@ DATABASES = {
         "USER": env.str("MARIADB_USER"),
         "PASSWORD": env.str("MARIADB_PASSWORD"),
     },
+    DB_POSTGRES: {
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": env.str("POSTGRES_HOST"),
+        "PORT": env.int("POSTGRES_PORT"),
+        "NAME": env.str("POSTGRES_DATABASE"),
+        "USER": env.str("POSTGRES_USER"),
+        "PASSWORD": env.str("POSTGRES_PASSWORD"),
+    },
 }
 
 DATABASE_ROUTERS = [
