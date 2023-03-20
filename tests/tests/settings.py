@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "app_mysql",
     "app_mariadb",
+    "app_postgres",
 ]
 
 MIDDLEWARE = [
