@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "app_mysql",
-    "app_mariadb",
+#     "app_mariadb",
     "app_postgres",
 ]
 
@@ -96,14 +96,14 @@ DATABASES = {
         "USER": env.str("MYSQL_USER"),
         "PASSWORD": env.str("MYSQL_PASSWORD"),
     },
-    DB_MARIADB: {
-        "ENGINE": "django.db.backends.mysql",
-        "HOST": env.str("MARIADB_HOST"),
-        "PORT": env.int("MARIADB_PORT"),
-        "NAME": env.str("MARIADB_DATABASE"),
-        "USER": env.str("MARIADB_USER"),
-        "PASSWORD": env.str("MARIADB_PASSWORD"),
-    },
+#     DB_MARIADB: {
+#         "ENGINE": "django.db.backends.mysql",
+#         "HOST": env.str("MARIADB_HOST"),
+#         "PORT": env.int("MARIADB_PORT"),
+#         "NAME": env.str("MARIADB_DATABASE"),
+#         "USER": env.str("MARIADB_USER"),
+#         "PASSWORD": env.str("MARIADB_PASSWORD"),
+#     },
     DB_POSTGRES: {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": env.str("POSTGRES_HOST"),
