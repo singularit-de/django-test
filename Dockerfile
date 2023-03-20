@@ -5,6 +5,7 @@ LABEL maintainer="singularIT GmbH <robin.kehl@singular-it.de>"
 LABEL org.opencontainers.image.documentation=https://github.com/singularit-de/django-test#readme
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV PYTHONUNBUFFERED=0
 
 RUN apt-get update
 RUN apt-get install lsb-release -y
