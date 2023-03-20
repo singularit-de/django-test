@@ -25,7 +25,7 @@ jobs:
       POSTGRES_DATABASE: test_db
       POSTGRES_USER: test_user
       POSTGRES_PASSWORD: password
-      POSTGRES_PORT: 33062
+      POSTGRES_PORT: 5432
     services:
       # Label used to access the service container
       mysql:
@@ -48,6 +48,18 @@ jobs:
         ports:
           - 33062:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DATABASE: ${{env.POSTGRES_DATABASE}}
+          POSTGRES_USER: ${{env.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{env.POSTGRES_USER}}
+          POSTGRES_PORT: ${{env.POSTGRES_USER}}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     strategy:
       fail-fast: false
       matrix:
