@@ -7,6 +7,7 @@ ping = subprocess.run(['mysqladmin', 'ping', '-h', os.environ['MYSQL_HOST'], '-u
 
 
 if ping.returncode == 0:
+    print('MySQL-Server setup...')
     if os.environ['MYSQL_ALLOW_EMPTY_PASSWORD'] == 'yes':
         cmd = f'mysql -u {MYSQL_ROOT_USERNAME} -h {MYSQL_HOST} -P {MYSQL_PORT} -e "GRANT ALL on *.* to {MYSQL_USER:-test_user};"'
         subprocess.run(cmd, shell=True)

@@ -7,6 +7,7 @@ ping = subprocess.run(['mysqladmin', 'ping', '-h', os.environ['MARIADB_HOST'], '
 
 
 if ping.returncode == 0:
+    print('MariaDB-Server setup...')
     if os.environ['MARIADB_ALLOW_EMPTY_PASSWORD'] == 'yes':
         cmd = f'mysql -u {MARIADB_ROOT_USERNAME} -h {MARIADB_HOST} -P {MARIADB_PORT} -e "GRANT ALL on *.* to {MARIADB_USER:-test_user};"'
         subprocess.run(cmd, shell=True)
