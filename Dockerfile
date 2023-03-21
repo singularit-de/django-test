@@ -26,7 +26,7 @@ RUN apt-get -y install libmariadb-dev libssl-dev
 #CMD "$(if [ ${MYSQL_ALLOW_EMPTY_PASSWORD} = 'yes' ] ; then echo \"GRANT ALL on *.* to ${MYSQL_USER:-test_user};\"| mysql -u ${MYSQL_ROOT_USERNAME:-root} --password=\"\" -h ${MYSQL_HOST:-mysql}  --port=${MYSQL_PORT} ; else echo \"GRANT ALL on *.* to ${MYSQL_USER:-test_user};\"| mysql -u ${MYSQL_ROOT_USERNAME:-root} --password=${MYSQL_ROOT_PASSWORD} -h ${MYSQL_HOST:-msql} --port=${MYSQL_PORT}; fi) ; else echo \"No MYSQL_HOST, skipping...\"; fi"
 #CMD `echo "GRANT ALL on *.* to ${MYSQL_USER:-test_user};"| mysql -u ${MYSQL_ROOT_USERNAME:-root} --password=${MYSQL_ROOT_PASSWORD} -h ${MYSQL_HOST:-mysql} --port=${MYSQL_PORT}`
 #CMD `echo "GRANT ALL on *.* to 'test_user';"| mysql -u root --password="password" -h "127.0.0.1" --port="33061"`
-CMD ["sh", "-c", "echo \"GRANT ALL ON *.* TO 'user'@'127.0.0.1';\" | mysql -u root --password=password -h 127.0.0.1 -P 33061"]
+CMD ["sh", "-c", "echo \"GRANT ALL ON *.* TO 'test_user'@'127.0.0.1';\" | mysql -u root --password=password -h 127.0.0.1 -P 33061"]
 # MariaDB
 #CMD "$(if [ ${MARIADB_ALLOW_EMPTY_PASSWORD} = 'yes' ] ; then echo \"GRANT ALL on *.* to ${MARIADB_USER:-test_user};\"| mysql -u ${MARIADB_ROOT_USERNAME:-root} --password=\"\" -h ${MARIADB_HOST:-mysql}  --port=${MARIADB_PORT} ; else echo \"GRANT ALL on *.* to ${MARIADB_USER:-test_user};\"| mysql -u ${MARIADB_ROOT_USERNAME:-root} --password=${MARIADB_ROOT_PASSWORD} -h ${MARIADB_HOST:-msql} --port=${MARIADB_PORT}; fi) ; else echo \"No MARIADB_HOST, skipping...\"; fi"
 CMD `echo "GRANT ALL on *.* to ${MARIADB_USER:-test_user};"| mysql -u ${MARIADB_ROOT_USERNAME:-root} --password=${MARIADB_ROOT_PASSWORD} -h ${MARIADB_HOST:-mariadb} --port=${MARIADB_PORT}`
