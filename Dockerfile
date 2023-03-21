@@ -28,3 +28,4 @@ CMD `echo "GRANT ALL on *.* to ${MYSQL_USER:-test_user};"| mysql -u ${MYSQL_ROOT
 # MariaDB
 #CMD "$(if [ ${MARIADB_ALLOW_EMPTY_PASSWORD} = 'yes' ] ; then echo \"GRANT ALL on *.* to ${MARIADB_USER:-test_user};\"| mysql -u ${MARIADB_ROOT_USERNAME:-root} --password=\"\" -h ${MARIADB_HOST:-mysql}  --port=${MARIADB_PORT} ; else echo \"GRANT ALL on *.* to ${MARIADB_USER:-test_user};\"| mysql -u ${MARIADB_ROOT_USERNAME:-root} --password=${MARIADB_ROOT_PASSWORD} -h ${MARIADB_HOST:-msql} --port=${MARIADB_PORT}; fi) ; else echo \"No MARIADB_HOST, skipping...\"; fi"
 CMD `echo "GRANT ALL on *.* to ${MARIADB_USER:-test_user};"| mysql -u ${MARIADB_ROOT_USERNAME:-root} --password=${MARIADB_ROOT_PASSWORD} -h ${MARIADB_HOST:-mariadb} --port=${MARIADB_PORT}`
+CMD `echo "GRANT ALL on *.* to ${MARIADB_USER:-test_user};"| mysql -u ${MARIADB_ROOT_USERNAME:-root} --password=${MARIADB_ROOT_PASSWORD} -h ${MARIADB_HOST:-mariadb} --port=${MARIADB_PORT}`
