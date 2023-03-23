@@ -94,10 +94,10 @@ jobs:
         run: docker build . --tag orbisk/django-test:${{env.PYTHON_VERSION}} --tag orbisk/django-test:${{matrix.version}}
       - name: Mysql Grant
         run: |
-          echo "GRANT ALL on *.* to '${{MYSQL_USER}}';"| mysql -u root  -h ${{MYSQL_HOST}} --port=${{MYSQL_POST}}
+          echo "GRANT ALL on *.* to '${{env.MYSQL_USER}}';"| mysql -u root  -h ${{env.MYSQL_HOST}} --port=${{env.MYSQL_POST}}
       - name: MariaDB Grant
         run: |
-          echo "GRANT ALL on *.* to '${{MARIADB_USER}}';"| mysql -u root  -h ${{MARIADB_HOST}} --port=${{MARIADB_POST}}
+          echo "GRANT ALL on *.* to '${{env.MARIADB_USER}}';"| mysql -u root  -h ${{env.MARIADB_HOST}} --port=${{env.MARIADB_POST}}
       - name: Test Databases
         run: |
           docker run --network host -v /"$(pwd)/tests":/app -w /app orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py test"
