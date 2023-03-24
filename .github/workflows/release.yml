@@ -3,7 +3,7 @@ name: release
 on:
   push:
     branches:
-      - 'tests/mysql-mariadb'
+      - 'main'
 
 jobs:
   build:
