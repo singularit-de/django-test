@@ -1,0 +1,5 @@
+django
+coverage
+mysqlclient
+django-environ
+psycopg2
