@@ -29,35 +29,74 @@ started.
 
 ## Compatibility
 
-- *️⃣ Open an Issue/Pull request if needed.
 - 🟢 Supported
-- 🟡 Unknown
-- 🔴 Currently not Supported
+- 🟡 Unknown 
+- 🔴 Currently not Supported (open an Issue or Pull request if needed)
 
-| Python version |       |
-|----------------|-------|
-| `^2.x`         | 🔴*️⃣ |
-| `^3.7.16`      | 🟢    |
-| `^3.8.16`      | 🟢    |
-| `^3.9.16`      | 🟢    |
-| `^3.10.10`     | 🟢    |
-| `^3.11.2`      | 🟢    |
+| Python version |     |
+|----------------|-----|
+| `^2.x`         | 🔴  |
+| `^3.7.16`      | 🟢  |
+| `^3.8.16`      | 🟢  |
+| `^3.9.16`      | 🟢  |
+| `^3.10.10`     | 🟢  |
+| `^3.11.2`      | 🟢  |
 
-| MySQL    |     |
+| MySQL*️⃣ |     |
 |----------|-----|
 | `^8.0.0` | 🟢  |
 | `<=5.7`  | 🟡  |
 
-| MariaDB   |     |
-|-----------|-----|
-| `^10.7.8` | 🟢  |
-| `<10.7.8` | 🟡  |
+| MariaDB*️⃣ |     |
+|------------|-----|
+| `^10.7.8`  | 🟢  |
+| `<10.7.8`  | 🟡  |
 
 | Postgres |     |
 |----------|-----|
 | `^15.2`  | 🟢  |
 | `<15.2`  | 🟡  |
 
+*️⃣ Additional step required see: [Error creating the test database](#error-creating-the-test-database)
+
+## Common issues
+
+### Error creating the test database
+`Got an error creating the test database: (1044, "1044 (42000): Access denied for user '<test_user>'@'%' to database 'test_<my_db>'", '42000')`
+
+The MYSQL user is only granted permissions for the MYSQL_DB, which means that Django is unable to create a test database.
+To use MySQL and MariaDB with a non-root user, you need to grant privileges to your test user.
+
+`echo "GRANT ALL on *.* to '$MYSQL_USER';"| mysql -u root --password="$MYSQL_ROOT_PASSWORD" -h <host> -p <port>`
+
+
+## CI Examples
+
+### GitLab CI
+
+```yml
+variables:
+  MARIADB_USER: test_user
+  MARIADB_PASSWORD: password
+  MARIADB_ROOT_PASSWORD: root@password
+  MARIADB_DATABASE: my_db
+
+django-tests:
+  image: orbisk/django-test:3.11
+  stage: test
+  services:
+    - name: mariadb:10
+      alias: maria
+  script:
+    - pip3 install -r requirements.txt
+    # The MYSQL user only gets permissions for MYSQL_DB, so Django can't create a test database.
+    - echo "GRANT ALL on *.* to '$MARIADB_USER';"| mysql -u root --password="$MARIADB_ROOT_PASSWORD" -h maria
+    - python3 manage.py test
+
+```
+
 ## Feedback
+
+
 
 If you have any problems with or questions about this image, please open an issue on GitHub.
