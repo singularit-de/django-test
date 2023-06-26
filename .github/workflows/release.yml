@@ -24,7 +24,7 @@ jobs:
       MARIADB_DATABASE: test_db
       MARIADB_USER: test_user
       MARIADB_PASSWORD: password
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+      MARIADB_RANDOM_ROOT_PASSWORD: 'yes'
       MARIADB_PORT: 33062
       POSTGRES_HOST: 127.0.0.1
       POSTGRES_DB: test_db
