@@ -26,6 +26,7 @@ jobs:
       MARIADB_PASSWORD: password
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD : 'yes'
       MARIADB_PORT: 33062
+      MARIADB_MYSQL_LOCALHOST_USER: true
       POSTGRES_HOST: 127.0.0.1
       POSTGRES_DB: test_db
       POSTGRES_USER: test_user
@@ -51,6 +52,7 @@ jobs:
           MARIADB_USER: ${{env.MARIADB_USER}}
           MARIADB_PASSWORD: ${{env.MARIADB_PASSWORD}}
           MARIADB_DATABASE: ${{env.MARIADB_DATABASE}}
+          MARIADB_MYSQL_LOCALHOST_USER:  ${{env.MARIADB_MYSQL_LOCALHOST_USER}}
         ports:
           - 33062:3306
         options: --health-cmd="healthcheck.sh --su-mysql --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
