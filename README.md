@@ -29,8 +29,8 @@ started.
 
 ## Compatibility
 
-- 🟢 Supported
-- 🟡 Unknown 
+- 🟢 Supported/Tested
+- 🟡 Unknown/Untested
 - 🔴 Currently not Supported (open an Issue or Pull request if needed)
 
 | Python version |     |
