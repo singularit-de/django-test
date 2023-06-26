@@ -47,7 +47,7 @@ jobs:
       mariadb:
         image: mariadb
         env:
-          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: ${{env.MARIADB_ALLOW_EMPTY_ROOT_PASSWORD}}
+          MARIADB_RANDOM_ROOT_PASSWORD: ${{env.MARIADB_RANDOM_ROOT_PASSWORD}}
           MARIADB_USER: ${{env.MARIADB_USER}}
           MARIADB_PASSWORD: ${{env.MARIADB_PASSWORD}}
           MARIADB_DATABASE: ${{env.MARIADB_DATABASE}}
