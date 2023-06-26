@@ -29,8 +29,8 @@ started.
 
 ## Compatibility
 
-- 🟢 Supported
-- 🟡 Unknown 
+- 🟢 Supported/Tested
+- 🟡 Unknown/Untested
 - 🔴 Currently not Supported (open an Issue or Pull request if needed)
 
 | Python version |     |
@@ -49,6 +49,7 @@ started.
 
 | MariaDB*️⃣ |     |
 |------------|-----|
+| `^11.0.0`  | 🟡  |
 | `^10.7.8`  | 🟢  |
 | `<10.7.8`  | 🟡  |
 
