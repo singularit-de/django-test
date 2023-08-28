@@ -1,1 +1,1 @@
-FROM python:3.8.17
+FROM python:3.8.18
