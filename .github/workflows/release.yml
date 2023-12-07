@@ -37,7 +37,7 @@ jobs:
       MSSQL_DATABASE: test_db
       MSSQL_USER: sa
       MSSQL_PASSWORD: yourStrong(!)Password
-      MSSQL_PORT: 1443
+      MSSQL_PORT: 1433
     services:
       # Label used to access the service container
       mssql:
