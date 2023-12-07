@@ -3,3 +3,4 @@ coverage
 mysqlclient
 django-environ
 psycopg2
+mssql-django

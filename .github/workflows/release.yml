@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'feature/*'
 
 jobs:
   build:
@@ -32,8 +33,21 @@ jobs:
       POSTGRES_USER: test_user
       POSTGRES_PASSWORD: password
       POSTGRES_PORT: 5432
+      MSSQL_HOST: 127.0.0.1
+      MSSQL_DATABASE: test_db
+      MSSQL_USER: sa
+      MSSQL_PASSWORD: yourStrong(!)Password
+      MSSQL_PORT: 1443
     services:
       # Label used to access the service container
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        env:
+          MSSQL_SA_PASSWORD: ${{secrets.MSSQL_PASSWORD}}
+          ACCEPT_EULA: Y
+        ports:
+          - 1433:1433
+        options: --health-cmd="sqlcmd -U sa -P ${{secrets.MSSQL_PASSWORD}} -Q 'SELECT 1'" --health-interval=10s --health-timeout=5s --health-retries=3
       mysql:
         image: mysql
         env:
@@ -110,7 +124,7 @@ jobs:
       - name: Test Databases
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
         run: |
-          docker run --network host -v /"$(pwd)/tests":/app -w /app  -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_DATABASE=$MYSQL_DATABASE -e MYSQL_USER=$MYSQL_USER -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MARIADB_HOST=$MARIADB_HOST -e MARIADB_DATABASE=$MARIADB_DATABASE -e MARIADB_USER=$MARIADB_USER -e MARIADB_PORT=$MARIADB_PORT -e MARIADB_PASSWORD=$MARIADB_PASSWORD -e POSTGRES_HOST=$POSTGRES_HOST -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PORT=$POSTGRES_PORT -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py test"
+          docker run --network host -v /"$(pwd)/tests":/app -w /app  -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_DATABASE=$MYSQL_DATABASE -e MYSQL_USER=$MYSQL_USER -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MARIADB_HOST=$MARIADB_HOST -e MARIADB_DATABASE=$MARIADB_DATABASE -e MARIADB_USER=$MARIADB_USER -e MARIADB_PORT=$MARIADB_PORT -e MARIADB_PASSWORD=$MARIADB_PASSWORD -e POSTGRES_HOST=$POSTGRES_HOST -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PORT=$POSTGRES_PORT -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -e MSSQL_HOST -e MSSQL_PORT -e MSSQL_DATABASE -e MSSQL_USER -e MSSQL_PASSWORD orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py test"
       - name: Push Image
-        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
+        if: (steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version) && github.ref == 'refs/heads/main'
         run: docker push -a orbisk/django-test
