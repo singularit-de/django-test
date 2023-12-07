@@ -60,11 +60,11 @@ started.
 | `^15.2`  | 🟢 |
 | `<15.2`  | 🟡 |
 
-| MSSQL ([see](#-mssql-beta-)) |    |
-|------------------------------|----|
-| `>=2022`                     | 🟠 |
-| `^2019-CU23-ubuntu-20.04`    | 🟠 |
-| `<=2017`                     | 🟠 |
+| MSSQL ([see](#mssql-beta)) |    |
+|----------------------------|----|
+| `>=2022`                   | 🟠 |
+| `^2019-CU23-ubuntu-20.04`  | 🟠 |
+| `<=2017`                   | 🟠 |
 
 *️⃣ Additional step required see: [Error creating the test database](#error-creating-the-test-database)
 
@@ -109,9 +109,9 @@ django-tests:
 
 If you have any problems with or questions about this image, please open an issue on GitHub.
 
-## ⚠️ MSSQL Beta ⚠️
+## MSSQL Beta
 
-The MSSQL support is currently in beta. If you have any problems with or questions about this image, please open an
+⚠️ The MSSQL support is currently in beta. If you have any problems with or questions about this image, please open an
 issue on GitHub.
 
 MSSQL is currently only supported/tested with the following versions:
