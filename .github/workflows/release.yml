@@ -25,7 +25,7 @@ jobs:
       MARIADB_DATABASE: test_db
       MARIADB_USER: test_user
       MARIADB_PASSWORD: password
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD : 'yes'
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
       MARIADB_PORT: 33062
       MARIADB_MYSQL_LOCALHOST_USER: true
       POSTGRES_HOST: 127.0.0.1
@@ -48,7 +48,12 @@ jobs:
         ports:
           - 1433:1433
         # todo: dont hardcode password
-        options: --health-cmd="sqlcmd -U sa -P yourStrong(!)Password -Q 'SELECT 1'" --health-interval=20s --health-timeout=3s --health-retries=5
+        options: >-
+          --health-cmd "/opt/mssql-tools/bin/sqlcmd -U sa -P yourStrong(!)Password -Q 'SELECT 1' -b -o /dev/null"
+          --health-interval 60s
+          --health-timeout 30s
+          --health-start-period 20s
+          --health-retries 3
       mysql:
         image: mysql
         env:
@@ -63,11 +68,11 @@ jobs:
       mariadb:
         image: mariadb
         env:
-          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD : ${{env.MARIADB_ALLOW_EMPTY_ROOT_PASSWORD}}
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: ${{env.MARIADB_ALLOW_EMPTY_ROOT_PASSWORD}}
           MARIADB_USER: ${{env.MARIADB_USER}}
           MARIADB_PASSWORD: ${{env.MARIADB_PASSWORD}}
           MARIADB_DATABASE: ${{env.MARIADB_DATABASE}}
-          MARIADB_MYSQL_LOCALHOST_USER:  ${{env.MARIADB_MYSQL_LOCALHOST_USER}}
+          MARIADB_MYSQL_LOCALHOST_USER: ${{env.MARIADB_MYSQL_LOCALHOST_USER}}
         ports:
           - 33062:3306
         options: --health-cmd="healthcheck.sh --su-mysql --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
