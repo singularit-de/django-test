@@ -48,7 +48,7 @@ jobs:
         ports:
           - 1433:1433
         # todo: dont hardcode password
-        options: --health-cmd="sqlcmd -U sa -P yourStrong(!)Password -Q 'SELECT 1'" --health-interval=10s --health-timeout=5s --health-retries=10
+        options: --health-cmd="sqlcmd -U sa -P yourStrong(!)Password -Q 'SELECT 1'" --health-interval=20s --health-timeout=3s --health-retries=5
       mysql:
         image: mysql
         env:
