@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "app_mysql",
     "app_mariadb",
     "app_postgres",
+    "app_mssql",
 ]
 
 MIDDLEWARE = [
