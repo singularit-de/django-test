@@ -47,7 +47,8 @@ jobs:
           ACCEPT_EULA: Y
         ports:
           - 1433:1433
-        options: --health-cmd="sqlcmd -U sa -P ${{env.MSSQL_SA_PASSWORD}} -Q 'SELECT 1'" --health-interval=10s --health-timeout=5s --health-retries=3
+        # todo: dont hardcode password
+        options: --health-cmd="sqlcmd -U sa -P yourStrong(!)Password -Q 'SELECT 1'" --health-interval=10s --health-timeout=5s --health-retries=3
       mysql:
         image: mysql
         env:
