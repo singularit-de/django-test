@@ -35,14 +35,14 @@ started.
 - 🔴 Currently not Supported (open an Issue or Pull request if needed)
 
 | Python version |    |
-|--------------|----|
-| `^3.12`      | 🔴 |
-| `^3.11.2`    | 🟢 |
-| `^3.10.10`   | 🟢 |
-| `^3.9.16`    | 🟢 |
-| `^3.8.16`    | 🟢 |
-| `^3.7.16`    | 🟢 |
-| `^2.x`       | 🔴 |
+|----------------|----|
+| `^3.12`        | 🔴 |
+| `^3.11.2`      | 🟢 |
+| `^3.10.10`     | 🟢 |
+| `^3.9.16`      | 🟢 |
+| `^3.8.16`      | 🟢 |
+| `^3.7.16`      | 🟢 |
+| `^2.x`         | 🔴 |
 
 | MySQL*️⃣ |    |
 |----------|----|
@@ -60,11 +60,11 @@ started.
 | `^15.2`  | 🟢 |
 | `<15.2`  | 🟡 |
 
-| MSSQL                     |    |
-|---------------------------|----|
-| `>=2022`                  | 🟠 |
-| `^2019-CU23-ubuntu-20.04` | 🟠 |
-| `<=2017`                  | 🟠 |
+| MSSQL ([see](#-mssql-beta-)) |    |
+|------------------------------|----|
+| `>=2022`                     | 🟠 |
+| `^2019-CU23-ubuntu-20.04`    | 🟠 |
+| `<=2017`                     | 🟠 |
 
 *️⃣ Additional step required see: [Error creating the test database](#error-creating-the-test-database)
 
@@ -108,3 +108,16 @@ django-tests:
 ## Feedback
 
 If you have any problems with or questions about this image, please open an issue on GitHub.
+
+## ⚠️ MSSQL Beta ⚠️
+
+The MSSQL support is currently in beta. If you have any problems with or questions about this image, please open an
+issue on GitHub.
+
+MSSQL is currently only supported/tested with the following versions:
+
+- [`^mssql-server-linux:2019-CU23-ubuntu-20.04`](https://hub.docker.com/_/microsoft-mssql-server)
+- [`mssql-django===1.3`](https://pypi.org/project/mssql-django/)
+- [`Microsoft ODBC Driver 17 for SQL Server`](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=debian18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline) (`mssql-django`
+  requirement)
+
