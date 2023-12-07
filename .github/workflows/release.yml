@@ -43,11 +43,11 @@ jobs:
       mssql:
         image: mcr.microsoft.com/mssql/server:2019-latest
         env:
-          MSSQL_SA_PASSWORD: ${{secrets.MSSQL_PASSWORD}}
+          MSSQL_SA_PASSWORD: ${{env.MSSQL_PASSWORD}}
           ACCEPT_EULA: Y
         ports:
           - 1433:1433
-        options: --health-cmd="sqlcmd -U sa -P ${{secrets.MSSQL_PASSWORD}} -Q 'SELECT 1'" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="sqlcmd -U sa -P ${{env.MSSQL_PASSWORD}} -Q 'SELECT 1'" --health-interval=10s --health-timeout=5s --health-retries=3
       mysql:
         image: mysql
         env:
