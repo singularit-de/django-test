@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "app_mysql",
     "app_mariadb",
     "app_postgres",
+    "app_mssql",
 ]
 
 MIDDLEWARE = [
@@ -112,11 +113,21 @@ DATABASES = {
         "USER": env.str("POSTGRES_USER"),
         "PASSWORD": env.str("POSTGRES_PASSWORD"),
     },
+    DB_MSSQL: {
+        "ENGINE": "mssql",
+        "HOST": env.str("MSSQL_HOST"),
+        "PORT": env.int("MSSQL_PORT"),
+        "NAME": env.str("MSSQL_DATABASE"),
+        "USER": env.str("MSSQL_USER"),
+        "PASSWORD": env.str("MSSQL_PASSWORD"),
+    }
 }
 
 DATABASE_ROUTERS = [
     'app_mysql.router.DBRouter',
     'app_mariadb.router.DBRouter',
+    'app_postgres.router.DBRouter',
+    'app_mssql.router.DBRouter',
 ]
 
 # Password validation

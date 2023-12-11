@@ -31,45 +31,54 @@ started.
 
 - 🟢 Supported/Tested
 - 🟡 Unknown/Untested
+- 🟠 Beta/Experimental (please share your experiences)
 - 🔴 Currently not Supported (open an Issue or Pull request if needed)
 
-| Python version |     |
-|----------------|-----|
-| `^2.x`         | 🔴  |
-| `^3.7.16`      | 🟢  |
-| `^3.8.16`      | 🟢  |
-| `^3.9.16`      | 🟢  |
-| `^3.10.10`     | 🟢  |
-| `^3.11.2`      | 🟢  |
+| Python version |    |
+|----------------|----|
+| `^3.12`        | 🔴 |
+| `^3.11.2`      | 🟢 |
+| `^3.10.10`     | 🟢 |
+| `^3.9.16`      | 🟢 |
+| `^3.8.16`      | 🟢 |
+| `^3.7.16`      | 🟢 |
+| `^2.x`         | 🔴 |
 
-| MySQL*️⃣ |     |
-|----------|-----|
-| `^8.0.0` | 🟢  |
-| `<=5.7`  | 🟡  |
+| MySQL*️⃣ |    |
+|----------|----|
+| `^8.0.0` | 🟢 |
+| `<=5.7`  | 🟡 |
 
-| MariaDB*️⃣ |     |
-|------------|-----|
-| `^11.0.0`  | 🟡  |
-| `^10.7.8`  | 🟢  |
-| `<10.7.8`  | 🟡  |
+| MariaDB*️⃣ |    |
+|------------|----|
+| `^11.0.0`  | 🟡 |
+| `^10.7.8`  | 🟢 |
+| `<10.7.8`  | 🟡 |
 
-| Postgres |     |
-|----------|-----|
-| `^15.2`  | 🟢  |
-| `<15.2`  | 🟡  |
+| Postgres |    |
+|----------|----|
+| `^15.2`  | 🟢 |
+| `<15.2`  | 🟡 |
+
+| MSSQL ([see](#mssql-beta)) |    |
+|----------------------------|----|
+| `>=2022`                   | 🟠 |
+| `^2019-CU23-ubuntu-20.04`  | 🟠 |
+| `<=2017`                   | 🟠 |
 
 *️⃣ Additional step required see: [Error creating the test database](#error-creating-the-test-database)
 
 ## Common issues
 
 ### Error creating the test database
+
 `Got an error creating the test database: (1044, "1044 (42000): Access denied for user '<test_user>'@'%' to database 'test_<my_db>'", '42000')`
 
-The MYSQL user is only granted permissions for the MYSQL_DB, which means that Django is unable to create a test database.
+The MYSQL user is only granted permissions for the MYSQL_DB, which means that Django is unable to create a test
+database.
 To use MySQL and MariaDB with a non-root user, you need to grant privileges to your test user.
 
 `echo "GRANT ALL on *.* to '$MYSQL_USER';"| mysql -u root --password="$MYSQL_ROOT_PASSWORD" -h <host> -p <port>`
-
 
 ## CI Examples
 
@@ -98,6 +107,16 @@ django-tests:
 
 ## Feedback
 
-
-
 If you have any problems with or questions about this image, please open an issue on GitHub.
+
+## MSSQL Beta
+
+⚠️ The MSSQL support is currently in beta. If you have any problems with or questions about this image, please open an
+issue on GitHub.
+
+MSSQL is currently only supported/tested with the following versions:
+
+- [`^mssql-server-linux:2019-CU23-ubuntu-20.04`](https://hub.docker.com/_/microsoft-mssql-server)
+- [`mssql-django===1.3`](https://pypi.org/project/mssql-django/)
+- [`Microsoft ODBC Driver 17 for SQL Server` & `Microsoft ODBC Driver 18 for SQL Server`](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=debian18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline) ('Microsoft ODBC Driver 18 for SQL Server' does currently not work with mssql as ci service with self-signed ssl certs. If you have any solution, feel free to open an Issue or PR)
+

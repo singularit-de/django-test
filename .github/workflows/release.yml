@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'feature/*'
 
 jobs:
   build:
@@ -24,7 +25,7 @@ jobs:
       MARIADB_DATABASE: test_db
       MARIADB_USER: test_user
       MARIADB_PASSWORD: password
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD : 'yes'
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
       MARIADB_PORT: 33062
       MARIADB_MYSQL_LOCALHOST_USER: true
       POSTGRES_HOST: 127.0.0.1
@@ -32,8 +33,27 @@ jobs:
       POSTGRES_USER: test_user
       POSTGRES_PASSWORD: password
       POSTGRES_PORT: 5432
+      MSSQL_HOST: 127.0.0.1
+      MSSQL_DATABASE: test_db
+      MSSQL_USER: sa
+      MSSQL_PASSWORD: yourStrong(!)Password
+      MSSQL_PORT: 1433
     services:
       # Label used to access the service container
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        env:
+          MSSQL_SA_PASSWORD: ${{env.MSSQL_PASSWORD}}
+          ACCEPT_EULA: Y
+        ports:
+          - 1433:1433
+        # todo: dont hardcode password
+#        options: >-
+#          --health-cmd "/opt/mssql-tools/bin/sqlcmd -U sa -P yourStrong(!)Password -Q 'SELECT 1' -b -o /dev/null"
+#          --health-interval 60s
+#          --health-timeout 30s
+#          --health-start-period 20s
+#          --health-retries 3
       mysql:
         image: mysql
         env:
@@ -48,11 +68,11 @@ jobs:
       mariadb:
         image: mariadb
         env:
-          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD : ${{env.MARIADB_ALLOW_EMPTY_ROOT_PASSWORD}}
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: ${{env.MARIADB_ALLOW_EMPTY_ROOT_PASSWORD}}
           MARIADB_USER: ${{env.MARIADB_USER}}
           MARIADB_PASSWORD: ${{env.MARIADB_PASSWORD}}
           MARIADB_DATABASE: ${{env.MARIADB_DATABASE}}
-          MARIADB_MYSQL_LOCALHOST_USER:  ${{env.MARIADB_MYSQL_LOCALHOST_USER}}
+          MARIADB_MYSQL_LOCALHOST_USER: ${{env.MARIADB_MYSQL_LOCALHOST_USER}}
         ports:
           - 33062:3306
         options: --health-cmd="healthcheck.sh --su-mysql --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -110,7 +130,7 @@ jobs:
       - name: Test Databases
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
         run: |
-          docker run --network host -v /"$(pwd)/tests":/app -w /app  -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_DATABASE=$MYSQL_DATABASE -e MYSQL_USER=$MYSQL_USER -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MARIADB_HOST=$MARIADB_HOST -e MARIADB_DATABASE=$MARIADB_DATABASE -e MARIADB_USER=$MARIADB_USER -e MARIADB_PORT=$MARIADB_PORT -e MARIADB_PASSWORD=$MARIADB_PASSWORD -e POSTGRES_HOST=$POSTGRES_HOST -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PORT=$POSTGRES_PORT -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py test"
+          docker run --network host -v /"$(pwd)/tests":/app -w /app  -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_DATABASE=$MYSQL_DATABASE -e MYSQL_USER=$MYSQL_USER -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MARIADB_HOST=$MARIADB_HOST -e MARIADB_DATABASE=$MARIADB_DATABASE -e MARIADB_USER=$MARIADB_USER -e MARIADB_PORT=$MARIADB_PORT -e MARIADB_PASSWORD=$MARIADB_PASSWORD -e POSTGRES_HOST=$POSTGRES_HOST -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PORT=$POSTGRES_PORT -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -e MSSQL_HOST -e MSSQL_PORT -e MSSQL_DATABASE -e MSSQL_USER -e MSSQL_PASSWORD orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py test"
       - name: Push Image
-        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
+        if: (steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version) && github.ref == 'refs/heads/main'
         run: docker push -a orbisk/django-test
