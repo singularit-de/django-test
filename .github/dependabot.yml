@@ -45,3 +45,11 @@ updates:
     ignore:
       - dependency-name: "python"
         update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
+  - package-ecosystem: "docker"
+    directory: "/3.12"
+    schedule:
+      interval: "daily"
+    target-branch: "main"
+    ignore:
+      - dependency-name: "python"
+        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
