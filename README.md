@@ -36,6 +36,7 @@ started.
 
 | Python version |    |
 |----------------|----|
+| `^3.13.0`      | 🟢 |
 | `^3.12.4`      | 🟢 |
 | `^3.11.2`      | 🟢 |
 | `^3.10.10`     | 🟢 |
@@ -63,7 +64,7 @@ started.
 | MSSQL ([see](#mssql-beta)) |    |
 |----------------------------|----|
 | `>=2022`                   | 🟠 |
-| `^2019-CU23-ubuntu-20.04`  | 🟠 |
+| `^2019-CU23-ubuntu-20.04`  | 🟢 |
 | `<=2017`                   | 🟠 |
 
 *️⃣ Additional step required see: [Error creating the test database](#error-creating-the-test-database)
