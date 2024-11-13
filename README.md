@@ -27,6 +27,20 @@ comes with a preinstalled MySQL config, which means you can get up and running w
 addition, we've included all the necessary clients, such as mysql-client, to ensure you have everything you need to get
 started.
 
+## Features
+
+- 🐍 Python 3.7 - 3.13
+- ⚡️ [`uv`](https://github.com/astral-sh/uv) preinstalled
+- 🏗️ Build dependencies preinstalled
+- 🔄 CI/CD ready
+- 🐘 Postgres support
+- 🐬 MariaDB support
+- 🐬 MySQL support
+- 🏢 MSSQL support (beta)
+
+
+[//]: # (out of the box mysql support)
+
 ## Compatibility
 
 - 🟢 Supported/Tested
@@ -34,16 +48,16 @@ started.
 - 🟠 Beta/Experimental (please share your experiences)
 - 🔴 Currently not Supported (open an Issue or Pull request if needed)
 
-| Python version |    |
-|----------------|----|
-| `^3.13.0`      | 🟢 |
-| `^3.12.4`      | 🟢 |
-| `^3.11.2`      | 🟢 |
-| `^3.10.10`     | 🟢 |
-| `^3.9.16`      | 🟢 |
-| `^3.8.16`      | 🟢 |
-| `^3.7.16`      | 🟢 |
-| `^2.x`         | 🔴 |
+| Python version |    | uv preinstalled |
+|----------------|----|-----------------|
+| `^3.13.0`      | 🟢 | 🟢 (`^3.13.0`)  |
+| `^3.12.4`      | 🟢 | 🟢 (`^3.12.7`)  |
+| `^3.11.2`      | 🟢 | 🟢 (`^3.11.10`) |
+| `^3.10.10`     | 🟢 | 🟢 (`^3.10.15`) |
+| `^3.9.16`      | 🟢 | 🟢 (`^3.9.20`)  |
+| `^3.8.16`      | 🟢 | 🟢 (`^3.8.20`)  |
+| `^3.7.16`      | 🟢 | 🔴              |
+| `^2.x`         | 🔴 | 🔴              |
 
 | MySQL*️⃣ |    |
 |----------|----|
@@ -119,5 +133,8 @@ MSSQL is currently only supported/tested with the following versions:
 
 - [`^mssql-server-linux:2019-CU23-ubuntu-20.04`](https://hub.docker.com/_/microsoft-mssql-server)
 - [`mssql-django===1.3`](https://pypi.org/project/mssql-django/)
-- [`Microsoft ODBC Driver 17 for SQL Server` & `Microsoft ODBC Driver 18 for SQL Server`](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=debian18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline) ('Microsoft ODBC Driver 18 for SQL Server' does currently not work with mssql as ci service with self-signed ssl certs. If you have any solution, feel free to open an Issue or PR)
+- [`Microsoft ODBC Driver 17 for SQL Server` &
+  `Microsoft ODBC Driver 18 for SQL Server`](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=debian18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline) ('
+  Microsoft ODBC Driver 18 for SQL Server' does currently not work with mssql as ci service with self-signed ssl certs.
+  If you have any solution, feel free to open an Issue or PR)
 
