@@ -3,7 +3,7 @@ from django.test import TestCase
 
 
 class Test(TestCase):
-    databases = ['default', settings.DB_MYSQL_9]
+    databases = ['default', settings.DB_MYSQL_8]
 
     def test(self):
         self.assertTrue(True)
