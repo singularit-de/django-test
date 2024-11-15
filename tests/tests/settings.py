@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "app_mysql",
     "app_mysql_8",
     "app_mariadb",
+    "app_mariadb_10",
     "app_postgres",
     "app_mssql",
 ]
@@ -82,6 +83,7 @@ WSGI_APPLICATION = 'tests.wsgi.application'
 DB_MYSQL = "mysql"
 DB_MYSQL_8 = "mysql_8"
 DB_MARIADB = "mariadb"
+DB_MARIADB_10 = "mariadb_10"
 DB_MSSQL = "mssql"
 DB_POSTGRES = "postgres"
 DB_MONGODB = "mongodb"
@@ -115,6 +117,14 @@ DATABASES = {
         "USER": env.str("MARIADB_USER"),
         "PASSWORD": env.str("MARIADB_PASSWORD"),
     },
+    DB_MARIADB_10: {
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": env.str("MARIADB_10_HOST"),
+        "PORT": env.int("MARIADB_10_PORT"),
+        "NAME": env.str("MARIADB_10_DATABASE"),
+        "USER": env.str("MARIADB_10_USER"),
+        "PASSWORD": env.str("MARIADB_10_PASSWORD"),
+    },
     DB_POSTGRES: {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": env.str("POSTGRES_HOST"),
@@ -137,6 +147,7 @@ DATABASE_ROUTERS = [
     'app_mysql.router.DBRouter',
     'app_mysql_8.router.DBRouter',
     'app_mariadb.router.DBRouter',
+    'app_mariadb_10.router.DBRouter',
     'app_postgres.router.DBRouter',
     'app_mssql.router.DBRouter',
 ]
