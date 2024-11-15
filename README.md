@@ -48,19 +48,20 @@ started.
 - 🟠 Beta/Experimental (please share your experiences)
 - 🔴 Currently not Supported (open an Issue or Pull request if needed)
 
-| Python version |    | uv preinstalled |
-|----------------|----|-----------------|
-| `^3.13.0`      | 🟢 | 🟢 (`^3.13.0`)  |
-| `^3.12.4`      | 🟢 | 🟢 (`^3.12.7`)  |
-| `^3.11.2`      | 🟢 | 🟢 (`^3.11.10`) |
-| `^3.10.10`     | 🟢 | 🟢 (`^3.10.15`) |
-| `^3.9.16`      | 🟢 | 🟢 (`^3.9.20`)  |
-| `^3.8.16`      | 🟢 | 🟢 (`^3.8.20`)  |
-| `^3.7.16`      | 🟢 | 🔴              |
-| `^2.x`         | 🔴 | 🔴              |
+| Python version |                        | uv preinstalled |
+|----------------|------------------------|:----------------|
+| `^3.13.0`      | 🟢                     | 🟢 (`^3.13.0`)  |
+| `^3.12.4`      | 🟢                     | 🟢 (`^3.12.7`)  |
+| `^3.11.2`      | 🟢                     | 🟢 (`^3.11.10`) |
+| `^3.10.10`     | 🟢                     | 🟢 (`^3.10.15`) |
+| `^3.9.16`      | 🟢                     | 🟢 (`^3.9.20`)  |
+| `^3.8.16`      | 🟢                     | 🟢 (`^3.8.20`)  |
+| `^3.7.16`      | 🟡 ([see](#python-37)) | 🔴              |
+| `^2.x`         | 🔴                     | 🔴              |
 
 | MySQL*️⃣ |    |
 |----------|----|
+| `^9.0.0` | 🟢 |
 | `^8.0.0` | 🟢 |
 | `<=5.7`  | 🟡 |
 
@@ -138,3 +139,10 @@ MSSQL is currently only supported/tested with the following versions:
   Microsoft ODBC Driver 18 for SQL Server' does currently not work with mssql as ci service with self-signed ssl certs.
   If you have any solution, feel free to open an Issue or PR)
 
+## Limitations
+
+### Python 3.7
+
+Python 3.7 is not covered by our CI/CD tests anymore. This means that we can't guarantee that the image will work as
+expected with Python 3.7. The reason is that packages like `mssql-django` dropped support for Python 3.7, so we can't
+test it anymore. 

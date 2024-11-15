@@ -4,12 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Version to publish (3.7, 3.8, all,...) (only one)
+        description: Version to publish (3.8, all,...) (only one)
         required: true
   push:
     branches:
       - 'main'
       - 'feature/*'
+      - 'feat/*'
 
 jobs:
   build:
@@ -21,6 +22,12 @@ jobs:
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_PORT: 33061
+      MYSQL_8_HOST: 127.0.0.1
+      MYSQL_8_DATABASE: test_db
+      MYSQL_8_USER: test_user
+      MYSQL_8_PASSWORD: password
+      MYSQL_8_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_8_PORT: 33063
       MARIADB_HOST: 127.0.0.1
       MARIADB_DATABASE: test_db
       MARIADB_USER: test_user
@@ -65,6 +72,17 @@ jobs:
         ports:
           - 33061:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      mysql-8:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: ${{env.MYSQL_8_ALLOW_EMPTY_PASSWORD}}
+          MYSQL_USER: ${{env.MYSQL_8_USER}}
+          MYSQL_PASSWORD: ${{env.MYSQL_8_PASSWORD}}
+          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_8_ROOT_PASSWORD}}
+          MYSQL_DATABASE: ${{env.MYSQL_8_DATABASE}}
+        ports:
+          - 33063:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       mariadb:
         image: mariadb
         env:
@@ -92,7 +110,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ "3.7","3.8","3.9","3.10","3.11","3.12","3.13" ]
+        version: [ "3.8","3.9","3.10","3.11","3.12","3.13" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -123,6 +141,10 @@ jobs:
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
         run: |
           echo "GRANT ALL on *.* to '${{env.MYSQL_USER}}';"| mysql -u root  -h ${{env.MYSQL_HOST}} --port=${{env.MYSQL_PORT}}
+      - name: Mysql 8 Grant
+        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
+        run: |
+          echo "GRANT ALL on *.* to '${{env.MYSQL_8_USER}}';"| mysql -u root  -h ${{env.MYSQL_8_HOST}} --port=${{env.MYSQL_8_PORT}}
       - name: MariaDB Grant
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
         run: |
@@ -130,7 +152,7 @@ jobs:
       - name: Test Databases
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
         run: |
-          docker run --network host -v /"$(pwd)/tests":/app -w /app  -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_DATABASE=$MYSQL_DATABASE -e MYSQL_USER=$MYSQL_USER -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MARIADB_HOST=$MARIADB_HOST -e MARIADB_DATABASE=$MARIADB_DATABASE -e MARIADB_USER=$MARIADB_USER -e MARIADB_PORT=$MARIADB_PORT -e MARIADB_PASSWORD=$MARIADB_PASSWORD -e POSTGRES_HOST=$POSTGRES_HOST -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PORT=$POSTGRES_PORT -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -e MSSQL_HOST -e MSSQL_PORT -e MSSQL_DATABASE -e MSSQL_USER -e MSSQL_PASSWORD orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py test"
+          docker run --network host -v /"$(pwd)/tests":/app -w /app  -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_DATABASE=$MYSQL_DATABASE -e MYSQL_USER=$MYSQL_USER -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MYSQL_8_HOST=$MYSQL_8_HOST -e MYSQL_8_DATABASE=$MYSQL_8_DATABASE -e MYSQL_8_USER=$MYSQL_8_USER -e MYSQL_8_PORT=$MYSQL_8_PORT -e MYSQL_8_PASSWORD=$MYSQL_8_PASSWORD -e MARIADB_HOST=$MARIADB_HOST -e MARIADB_DATABASE=$MARIADB_DATABASE -e MARIADB_USER=$MARIADB_USER -e MARIADB_PORT=$MARIADB_PORT -e MARIADB_PASSWORD=$MARIADB_PASSWORD -e POSTGRES_HOST=$POSTGRES_HOST -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PORT=$POSTGRES_PORT -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -e MSSQL_HOST -e MSSQL_PORT -e MSSQL_DATABASE -e MSSQL_USER -e MSSQL_PASSWORD orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py test"
       - name: Push Image
         if: (steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version) && github.ref == 'refs/heads/main'
         run: docker push -a orbisk/django-test
