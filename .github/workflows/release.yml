@@ -174,7 +174,7 @@ jobs:
       - name: Test Databases
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
         run: |
-          docker run --network host -v /"$(pwd)/tests":/app -w /app \ 
+          docker run --network host -v /"$(pwd)/tests":/app -w /app \
             -e MYSQL_HOST \
             -e MYSQL_DATABASE \
             -e MYSQL_USER \
@@ -204,7 +204,7 @@ jobs:
             -e MSSQL_PORT \
             -e MSSQL_DATABASE \
             -e MSSQL_USER \
-            -e MSSQL_PASSWORD  \
+            -e MSSQL_PASSWORD \
             orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && pip install -r requirements.txt && python manage.py test"
 
       - name: Push Image
