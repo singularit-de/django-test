@@ -21,6 +21,12 @@ jobs:
       MYSQL_PASSWORD: password
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_PORT: 33061
+      MYSQL_8_HOST: 127.0.0.1
+      MYSQL_8_DATABASE: test_db
+      MYSQL_8_USER: test_user
+      MYSQL_8_PASSWORD: password
+      MYSQL_8_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_8_PORT: 33063
       MARIADB_HOST: 127.0.0.1
       MARIADB_DATABASE: test_db
       MARIADB_USER: test_user
@@ -64,6 +70,17 @@ jobs:
           MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
         ports:
           - 33061:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      mysql-8:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: ${{env.MYSQL_8_ALLOW_EMPTY_PASSWORD}}
+          MYSQL_USER: ${{env.MYSQL_8_USER}}
+          MYSQL_PASSWORD: ${{env.MYSQL_8_PASSWORD}}
+          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_8_ROOT_PASSWORD}}
+          MYSQL_DATABASE: ${{env.MYSQL_8_DATABASE}}
+        ports:
+          - 33063:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       mariadb:
         image: mariadb
@@ -123,6 +140,10 @@ jobs:
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
         run: |
           echo "GRANT ALL on *.* to '${{env.MYSQL_USER}}';"| mysql -u root  -h ${{env.MYSQL_HOST}} --port=${{env.MYSQL_PORT}}
+      - name: Mysql 8 Grant
+        if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
+        run: |
+          echo "GRANT ALL on *.* to '${{env.MYSQL_8_USER}}';"| mysql -u root  -h ${{env.MYSQL_8_HOST}} --port=${{env.MYSQL_8_PORT}}
       - name: MariaDB Grant
         if: steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version
         run: |

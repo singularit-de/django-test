@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "app_mysql",
+    "app_mysql_8",
     "app_mariadb",
     "app_postgres",
     "app_mssql",
@@ -79,6 +80,7 @@ WSGI_APPLICATION = 'tests.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DB_MYSQL = "mysql"
+DB_MYSQL_8 = "mysql_8"
 DB_MARIADB = "mariadb"
 DB_MSSQL = "mssql"
 DB_POSTGRES = "postgres"
@@ -96,6 +98,14 @@ DATABASES = {
         "NAME": env.str("MYSQL_DATABASE"),
         "USER": env.str("MYSQL_USER"),
         "PASSWORD": env.str("MYSQL_PASSWORD"),
+    },
+    DB_MYSQL_8: {
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": env.str("MYSQL_8_HOST"),
+        "PORT": env.int("MYSQL_8_PORT"),
+        "NAME": env.str("MYSQL_8_DATABASE"),
+        "USER": env.str("MYSQL_8_USER"),
+        "PASSWORD": env.str("MYSQL_8_PASSWORD"),
     },
     DB_MARIADB: {
         "ENGINE": "django.db.backends.mysql",
@@ -125,6 +135,7 @@ DATABASES = {
 
 DATABASE_ROUTERS = [
     'app_mysql.router.DBRouter',
+    'app_mysql_8.router.DBRouter',
     'app_mariadb.router.DBRouter',
     'app_postgres.router.DBRouter',
     'app_mssql.router.DBRouter',
