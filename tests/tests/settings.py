@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "app_mariadb",
     "app_mariadb_10",
     "app_postgres",
+    "app_postgres_16",
+    "app_postgres_15",
     "app_mssql",
 ]
 
@@ -86,6 +88,8 @@ DB_MARIADB = "mariadb"
 DB_MARIADB_10 = "mariadb_10"
 DB_MSSQL = "mssql"
 DB_POSTGRES = "postgres"
+DB_POSTGRES_16 = "postgres_16"
+DB_POSTGRES_15 = "postgres_15"
 DB_MONGODB = "mongodb"
 
 DATABASES = {
@@ -133,6 +137,22 @@ DATABASES = {
         "USER": env.str("POSTGRES_USER"),
         "PASSWORD": env.str("POSTGRES_PASSWORD"),
     },
+    DB_POSTGRES_16: {
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": env.str("POSTGRES_16_HOST"),
+        "PORT": env.int("POSTGRES_16_PORT"),
+        "NAME": env.str("POSTGRES_16_DB"),
+        "USER": env.str("POSTGRES_16_USER"),
+        "PASSWORD": env.str("POSTGRES_16_PASSWORD"),
+    },
+    DB_POSTGRES_15: {
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": env.str("POSTGRES_15_HOST"),
+        "PORT": env.int("POSTGRES_15_PORT"),
+        "NAME": env.str("POSTGRES_15_DB"),
+        "USER": env.str("POSTGRES_15_USER"),
+        "PASSWORD": env.str("POSTGRES_15_PASSWORD"),
+    },
     DB_MSSQL: {
         "ENGINE": "mssql",
         "HOST": env.str("MSSQL_HOST"),
@@ -149,6 +169,8 @@ DATABASE_ROUTERS = [
     'app_mariadb.router.DBRouter',
     'app_mariadb_10.router.DBRouter',
     'app_postgres.router.DBRouter',
+    'app_postgres_16.router.DBRouter',
+    'app_postgres_15.router.DBRouter',
     'app_mssql.router.DBRouter',
 ]
 
