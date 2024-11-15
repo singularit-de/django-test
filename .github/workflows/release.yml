@@ -47,6 +47,16 @@ jobs:
       POSTGRES_USER: test_user
       POSTGRES_PASSWORD: password
       POSTGRES_PORT: 5432
+      POSTGRES_16_HOST: 127.0.0.1
+      POSTGRES_16_DB: test_db
+      POSTGRES_16_USER: test_user
+      POSTGRES_16_PASSWORD: password
+      POSTGRES_16_PORT: 54316
+      POSTGRES_15_HOST: 127.0.0.1
+      POSTGRES_15_DB: test_db
+      POSTGRES_15_USER: test_user
+      POSTGRES_15_PASSWORD: password
+      POSTGRES_15_PORT: 54315
       MSSQL_HOST: 127.0.0.1
       MSSQL_DATABASE: test_db
       MSSQL_USER: sa
@@ -120,6 +130,32 @@ jobs:
           POSTGRES_PASSWORD: ${{env.POSTGRES_PASSWORD}}
         ports:
           - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      postgres-16:
+        image: postgres:16
+        env:
+          POSTGRES_DB: ${{env.POSTGRES_16_DB}}
+          POSTGRES_USER: ${{env.POSTGRES_16_USER}}
+          POSTGRES_PASSWORD: ${{env.POSTGRES_16_PASSWORD}}
+        ports:
+          - 54316:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      postgres-15:
+        image: postgres:15
+        env:
+          POSTGRES_DB: ${{env.POSTGRES_15_DB}}
+          POSTGRES_USER: ${{env.POSTGRES_15_USER}}
+          POSTGRES_PASSWORD: ${{env.POSTGRES_15_PASSWORD}}
+        ports:
+          - 54315:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -200,6 +236,16 @@ jobs:
             -e POSTGRES_USER \
             -e POSTGRES_PORT \
             -e POSTGRES_PASSWORD \
+            -e POSTGRES_16_HOST \
+            -e POSTGRES_16_DB \
+            -e POSTGRES_16_USER \
+            -e POSTGRES_16_PORT \
+            -e POSTGRES_16_PASSWORD \
+            -e POSTGRES_15_HOST \
+            -e POSTGRES_15_DB \
+            -e POSTGRES_15_USER \
+            -e POSTGRES_15_PORT \
+            -e POSTGRES_15_PASSWORD \
             -e MSSQL_HOST \
             -e MSSQL_PORT \
             -e MSSQL_DATABASE \
