@@ -65,3 +65,13 @@ updates:
     ignore:
       - dependency-name: "python"
         update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
+  - package-ecosystem: "docker"
+    directory: "/3.13"
+    schedule:
+      interval: "daily"
+    target-branch: "main"
+    assignees:
+      - "OrbisK"
+    ignore:
+      - dependency-name: "python"
+        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
