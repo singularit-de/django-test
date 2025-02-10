@@ -252,7 +252,7 @@ jobs:
             -e MSSQL_USER \
             -e MSSQL_PASSWORD \
             -e UV_SYSTEM_PYTHON=true \
-            orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && uv --system pip install -r requirements.txt && python manage.py test"
+            orbisk/django-test:${{env.PYTHON_VERSION}} sh -c "cd /app && uv pip install -r requirements.txt && python manage.py test"
 
       - name: Push Image
         if: (steps.changes.outputs.src == 'true' || steps.changes.outputs.docker == 'true' || github.event.inputs.version == 'all' || github.event.inputs.version == matrix.version) && github.ref == 'refs/heads/main'
