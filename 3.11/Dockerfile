@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:0.8.15 AS uv
+FROM ghcr.io/astral-sh/uv:0.8.16 AS uv
 
 FROM python:3.11.13
 COPY --from=uv /uv /uvx /bin/
