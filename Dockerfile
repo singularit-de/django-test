@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.source=https://github.com/singularit-de/django-te
 LABEL maintainer="singularIT GmbH <robin.kehl@singular-it.de>"
 LABEL org.opencontainers.image.documentation=https://github.com/singularit-de/django-test#readme
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=0
 
 RUN apt-get update
