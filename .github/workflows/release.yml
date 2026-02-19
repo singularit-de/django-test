@@ -47,6 +47,11 @@ jobs:
       POSTGRES_USER: test_user
       POSTGRES_PASSWORD: password
       POSTGRES_PORT: 5432
+      POSTGRES_17_HOST: 127.0.0.1
+      POSTGRES_17_DB: test_db
+      POSTGRES_17_USER: test_user
+      POSTGRES_17_PASSWORD: password
+      POSTGRES_17_PORT: 54317
       POSTGRES_16_HOST: 127.0.0.1
       POSTGRES_16_DB: test_db
       POSTGRES_16_USER: test_user
@@ -135,6 +140,19 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      postgres-17:
+        image: postgres:16
+        env:
+          POSTGRES_DB: ${{env.POSTGRES_17_DB}}
+          POSTGRES_USER: ${{env.POSTGRES_17_USER}}
+          POSTGRES_PASSWORD: ${{env.POSTGRES_17_PASSWORD}}
+        ports:
+          - 54317:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
       postgres-16:
         image: postgres:16
         env:
@@ -164,7 +182,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ "3.8","3.9","3.10","3.11","3.12","3.13" ]
+        version: [ "3.8","3.9","3.10","3.11","3.12","3.13", "3.14" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -236,6 +254,11 @@ jobs:
             -e POSTGRES_USER \
             -e POSTGRES_PORT \
             -e POSTGRES_PASSWORD \
+            -e POSTGRES_17_HOST \
+            -e POSTGRES_17_DB \
+            -e POSTGRES_17_USER \
+            -e POSTGRES_17_PORT \
+            -e POSTGRES_17_PASSWORD \
             -e POSTGRES_16_HOST \
             -e POSTGRES_16_DB \
             -e POSTGRES_16_USER \

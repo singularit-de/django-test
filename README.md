@@ -29,7 +29,7 @@ started.
 
 ## Features
 
-- 🐍 Python 3.7 - 3.13
+- 🐍 Python 3.7 - 3.14
 - ⚡️ [`uv`](https://github.com/astral-sh/uv) preinstalled
 - 🏗️ Build dependencies preinstalled
 - 🔄 CI/CD ready
@@ -37,9 +37,6 @@ started.
 - 🐬 MariaDB support
 - 🐬 MySQL support
 - 🏢 MSSQL support (beta)
-
-
-[//]: # (out of the box mysql support)
 
 ## Compatibility
 
@@ -50,7 +47,8 @@ started.
 
 | Python version |                        | uv preinstalled |
 |----------------|------------------------|:----------------|
-| `^3.13.0`      | 🟢                     | 🟢 (`^3.13.0`)  |
+| `^3.14.3`      | 🟢                     | 🟢              |
+| `^3.13.0`      | 🟢                     | 🟢              |
 | `^3.12.4`      | 🟢                     | 🟢 (`^3.12.7`)  |
 | `^3.11.2`      | 🟢                     | 🟢 (`^3.11.10`) |
 | `^3.10.10`     | 🟢                     | 🟢 (`^3.10.15`) |
