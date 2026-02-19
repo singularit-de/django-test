@@ -34,7 +34,7 @@ started.
 - 🏗️ Build dependencies preinstalled
 - 🔄 CI/CD ready
 - 🐘 Postgres support
-- 🐬 MariaDB support
+- 🦭 MariaDB support
 - 🐬 MySQL support
 - 🏢 MSSQL support (beta)
 
