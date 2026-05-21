@@ -13,7 +13,7 @@ RUN apt-get -y install apt-utils
 
 RUN cd /tmp && curl -OL https://dev.mysql.com/get/mysql-apt-config_0.8.36-1_all.deb && dpkg -i mysql-apt-config* && rm -f /tmp/*.deb
 RUN apt-get -y update
-RUN apt-get install mysql-apt-config
+RUN apt-get -y install mysql-apt-config
 RUN apt-get -y update
 
 # MySQL
