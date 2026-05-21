@@ -160,6 +160,12 @@ DATABASES = {
         "NAME": env.str("MSSQL_DATABASE"),
         "USER": env.str("MSSQL_USER"),
         "PASSWORD": env.str("MSSQL_PASSWORD"),
+        "OPTIONS": {
+            # ODBC Driver 18 enables encryption by default and validates the
+            # server certificate. The mssql test container ships a self-signed
+            # cert, so we skip validation here.
+            "extra_params": "TrustServerCertificate=yes",
+        },
     }
 }
 
