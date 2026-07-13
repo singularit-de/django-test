@@ -152,7 +152,7 @@ jobs:
           MSSQL_SA_PASSWORD: yourStrong(!)Password
         ports:
           - ${{matrix.db.port}}:${{matrix.db.port}}
-        options: ${{matrix.db.options}}
+        options: ${{ matrix.db.options || '' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
