@@ -38,14 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "app_mysql",
-    "app_mysql_8",
-    "app_mariadb",
-    "app_mariadb_10",
-    "app_postgres",
-    "app_postgres_16",
-    "app_postgres_15",
-    "app_mssql",
+    'app_db',
 ]
 
 MIDDLEWARE = [
@@ -82,102 +75,30 @@ WSGI_APPLICATION = 'tests.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DB_MYSQL = "mysql"
-DB_MYSQL_8 = "mysql_8"
-DB_MARIADB = "mariadb"
-DB_MARIADB_10 = "mariadb_10"
-DB_MSSQL = "mssql"
-DB_POSTGRES = "postgres"
-DB_POSTGRES_16 = "postgres_16"
-DB_POSTGRES_15 = "postgres_15"
-DB_MONGODB = "mongodb"
+# The database under test is fully described by generic DB_* environment
+# variables, so the same settings/app/router work for every database in the
+# CI matrix (e.g. DB_OPTIONS='{"extra_params": "TrustServerCertificate=yes"}'
+# for mssql).
+DB_UNDER_TEST = "db_under_test"
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     },
-    DB_MYSQL: {
-        "ENGINE": "django.db.backends.mysql",
-        "HOST": env.str("MYSQL_HOST"),
-        "PORT": env.int("MYSQL_PORT"),
-        "NAME": env.str("MYSQL_DATABASE"),
-        "USER": env.str("MYSQL_USER"),
-        "PASSWORD": env.str("MYSQL_PASSWORD"),
+    DB_UNDER_TEST: {
+        "ENGINE": env.str("DB_ENGINE"),
+        "HOST": env.str("DB_HOST"),
+        "PORT": env.int("DB_PORT"),
+        "NAME": env.str("DB_NAME"),
+        "USER": env.str("DB_USER"),
+        "PASSWORD": env.str("DB_PASSWORD"),
+        "OPTIONS": env.json("DB_OPTIONS", default={}),
     },
-    DB_MYSQL_8: {
-        "ENGINE": "django.db.backends.mysql",
-        "HOST": env.str("MYSQL_8_HOST"),
-        "PORT": env.int("MYSQL_8_PORT"),
-        "NAME": env.str("MYSQL_8_DATABASE"),
-        "USER": env.str("MYSQL_8_USER"),
-        "PASSWORD": env.str("MYSQL_8_PASSWORD"),
-    },
-    DB_MARIADB: {
-        "ENGINE": "django.db.backends.mysql",
-        "HOST": env.str("MARIADB_HOST"),
-        "PORT": env.int("MARIADB_PORT"),
-        "NAME": env.str("MARIADB_DATABASE"),
-        "USER": env.str("MARIADB_USER"),
-        "PASSWORD": env.str("MARIADB_PASSWORD"),
-    },
-    DB_MARIADB_10: {
-        "ENGINE": "django.db.backends.mysql",
-        "HOST": env.str("MARIADB_10_HOST"),
-        "PORT": env.int("MARIADB_10_PORT"),
-        "NAME": env.str("MARIADB_10_DATABASE"),
-        "USER": env.str("MARIADB_10_USER"),
-        "PASSWORD": env.str("MARIADB_10_PASSWORD"),
-    },
-    DB_POSTGRES: {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": env.str("POSTGRES_HOST"),
-        "PORT": env.int("POSTGRES_PORT"),
-        "NAME": env.str("POSTGRES_DB"),
-        "USER": env.str("POSTGRES_USER"),
-        "PASSWORD": env.str("POSTGRES_PASSWORD"),
-    },
-    DB_POSTGRES_16: {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": env.str("POSTGRES_16_HOST"),
-        "PORT": env.int("POSTGRES_16_PORT"),
-        "NAME": env.str("POSTGRES_16_DB"),
-        "USER": env.str("POSTGRES_16_USER"),
-        "PASSWORD": env.str("POSTGRES_16_PASSWORD"),
-    },
-    DB_POSTGRES_15: {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": env.str("POSTGRES_15_HOST"),
-        "PORT": env.int("POSTGRES_15_PORT"),
-        "NAME": env.str("POSTGRES_15_DB"),
-        "USER": env.str("POSTGRES_15_USER"),
-        "PASSWORD": env.str("POSTGRES_15_PASSWORD"),
-    },
-    DB_MSSQL: {
-        "ENGINE": "mssql",
-        "HOST": env.str("MSSQL_HOST"),
-        "PORT": env.int("MSSQL_PORT"),
-        "NAME": env.str("MSSQL_DATABASE"),
-        "USER": env.str("MSSQL_USER"),
-        "PASSWORD": env.str("MSSQL_PASSWORD"),
-        "OPTIONS": {
-            # ODBC Driver 18 enables encryption by default and validates the
-            # server certificate. The mssql test container ships a self-signed
-            # cert, so we skip validation here.
-            "extra_params": "TrustServerCertificate=yes",
-        },
-    }
 }
 
 DATABASE_ROUTERS = [
-    'app_mysql.router.DBRouter',
-    'app_mysql_8.router.DBRouter',
-    'app_mariadb.router.DBRouter',
-    'app_mariadb_10.router.DBRouter',
-    'app_postgres.router.DBRouter',
-    'app_postgres_16.router.DBRouter',
-    'app_postgres_15.router.DBRouter',
-    'app_mssql.router.DBRouter',
+    'app_db.router.DBRouter',
 ]
 
 # Password validation
