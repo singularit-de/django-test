@@ -57,29 +57,37 @@ started.
 | `^3.7.16`      | 🟡 ([see](#python-37)) | 🔴              |
 | `^2.x`         | 🔴                     | 🔴              |
 
-| MySQL*️⃣ |    |
-|----------|----|
-| `^9.0.0` | 🟢 |
-| `^8.0.0` | 🟢 |
-| `<=5.7`  | 🟡 |
+Every Python version (3.8 - 3.14) is tested against every database version listed below in CI.
 
-| MariaDB*️⃣ |    |
-|------------|----|
-| `^11.0.0`  | 🟢 |
-| `^10.7.8`  | 🟢 |
-| `<10.7.8`  | 🟡 |
+| MySQL*️⃣     |    |
+|--------------|----|
+| `^9.7.0`     | 🟢 |
+| `^8.4.0`     | 🟢 |
+| `^8.0.0` EOL | 🟡 |
+| `<=5.7` EOL  | 🟡 |
+
+| MariaDB*️⃣    |    |
+|---------------|----|
+| `^12.3.0`     | 🟢 |
+| `^11.8.0`     | 🟢 |
+| `^11.4.0`     | 🟢 |
+| `^10.11.0`    | 🟢 |
+| `<10.11` EOL  | 🟡 |
 
 | Postgres |    |
 |----------|----|
+| `^18.0`  | 🟢 |
 | `^17.0`  | 🟢 |
 | `^16.0`  | 🟢 |
-| `^15.2`  | 🟢 |
-| `<15.2`  | 🟡 |
+| `^15.0`  | 🟢 |
+| `^14.0`  | 🟢 |
+| `<14`    | 🟡 |
 
 | MSSQL ([see](#mssql-beta)) |    |
 |----------------------------|----|
-| `>=2022`                   | 🟠 |
-| `^2019-CU23-ubuntu-20.04`  | 🟢 |
+| `2025`                     | 🟢 |
+| `2022`                     | 🟢 |
+| `2019`                     | 🟢 |
 | `<=2017`                   | 🟠 |
 
 *️⃣ Additional step required see: [Error creating the test database](#error-creating-the-test-database)
@@ -111,7 +119,7 @@ django-tests:
   image: orbisk/django-test:3.11
   stage: test
   services:
-    - name: mariadb:10
+    - name: mariadb:11.8
       alias: maria
   script:
     - pip3 install -r requirements.txt
@@ -132,8 +140,8 @@ issue on GitHub.
 
 MSSQL is currently only supported/tested with the following versions:
 
-- [`^mssql-server-linux:2019-CU23-ubuntu-20.04`](https://hub.docker.com/_/microsoft-mssql-server)
-- [`mssql-django===1.3`](https://pypi.org/project/mssql-django/)
+- [`mcr.microsoft.com/mssql/server:2019-latest`, `2022-latest` & `2025-latest`](https://mcr.microsoft.com/product/mssql/server/about)
+- [`mssql-django` (latest release)](https://pypi.org/project/mssql-django/)
 - [`Microsoft ODBC Driver 17 for SQL Server` &
   `Microsoft ODBC Driver 18 for SQL Server`](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=debian18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline)
 
