@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ "3.8","3.9","3.10","3.11","3.12","3.13", "3.14" ]
+        version: [ "3.8","3.9","3.10","3.11","3.12","3.13", "3.14", "3.15" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -59,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ "3.8","3.9","3.10","3.11","3.12","3.13", "3.14" ]
+        version: [ "3.8","3.9","3.10","3.11","3.12","3.13", "3.14", "3.15" ]
         # One entry per actively supported release series of each database
         # (as of 2026-07): MySQL 8.4/9.7 LTS, MariaDB 10.11/11.4/11.8/12.3,
         # PostgreSQL 14-18, SQL Server 2019/2022/2025.
@@ -233,7 +233,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ "3.8","3.9","3.10","3.11","3.12","3.13", "3.14" ]
+        version: [ "3.8","3.9","3.10","3.11","3.12","3.13", "3.14", "3.15" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
