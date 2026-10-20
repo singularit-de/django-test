@@ -103,11 +103,6 @@ jobs:
             grant: true
             options: --health-cmd="healthcheck.sh --su-mysql --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
           # PostgreSQL
-          - name: postgres-14
-            image: postgres:14
-            engine: django.db.backends.postgresql
-            port: 5432
-            options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
           - name: postgres-15
             image: postgres:15
             engine: django.db.backends.postgresql
