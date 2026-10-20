@@ -29,7 +29,7 @@ started.
 
 ## Features
 
-- 🐍 Python 3.7 - 3.14
+- 🐍 Python 3.7 - 3.15
 - ⚡️ [`uv`](https://github.com/astral-sh/uv) preinstalled
 - 🏗️ Build dependencies preinstalled
 - 🔄 CI/CD ready
@@ -47,6 +47,7 @@ started.
 
 | Python version |                        | uv preinstalled |
 |----------------|------------------------|:----------------|
+| `^3.15.0`      | 🟢                     | 🟢              |
 | `^3.14.3`      | 🟢                     | 🟢              |
 | `^3.13.0`      | 🟢                     | 🟢              |
 | `^3.12.4`      | 🟢                     | 🟢 (`^3.12.7`)  |
